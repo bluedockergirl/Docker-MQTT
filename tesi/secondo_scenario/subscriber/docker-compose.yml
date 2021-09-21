@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  mqtt_broker:
+    image: eclipse-mosquitto
+    container_name: broker
+    restart: always
+    
+    ports:
+      - 1885:1885
+      - 9001:9001
+
+
+  mqtt_subclient:
+    image: subscriber_mqtt_broker_1
+    container_name: client
+    build: .
+    
+    
+    restart: always
+    
+    environment:
+      BROKER_IP: 192.168.1.254
+      TOPIC: t
+
+networks:
+  default:
+    driver: bridge
+      
